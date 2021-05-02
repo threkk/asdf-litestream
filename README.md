@@ -17,7 +17,6 @@
 # Dependencies
 
 - `bash`, `curl`, `tar`: generic POSIX utilities.
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
 
 # Install
 
@@ -39,7 +38,7 @@ asdf list-all litestream
 asdf install litestream latest
 
 # Set a version globally (on your ~/.tool-versions file)
-asdf global litestream latest
+asdf global litestream <latest version number>
 
 # Now litestream commands are available
 litestream version
