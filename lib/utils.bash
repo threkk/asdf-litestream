@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for litestream.
 GH_REPO="https://github.com/benbjohnson/litestream"
 TOOL_NAME="litestream"
 TOOL_TEST="litestream version"
@@ -31,8 +30,6 @@ list_github_tags() {
 }
 
 list_all_versions() {
-  # TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-  # Change this function if litestream has other means of determining installable versions.
   list_github_tags
 }
 
@@ -41,10 +38,23 @@ download_release() {
   version="$1"
   filename="$2"
 
-  # TODO: Adapt the release URL convention for litestream
-  url="$GH_REPO/archive/v${version}.tar.gz"
+  case $(uname | tr '[:upper:]' '[:lower:]') in
+    linux*)
+      local platform=linux-amd64
+      local ext="tar.gz"
+      ;;
+    darwin*)
+      local platform=darwin-amd64
+      local ext="zip"
+      ;;
+    *)
+      local platform=notset
+      ;;
+  esac
 
-  echo "* Downloading $TOOL_NAME release $version..."
+  url="$GH_REPO/releases/download/v${version}/${TOOL_NAME}-v${version}-${platform}.${ext}"
+
+  echo "* Downloading $TOOL_NAME release $version from $url"
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
 }
 
@@ -58,10 +68,10 @@ install_version() {
   fi
 
   (
-    mkdir -p "$install_path"
-    cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+    mkdir -p "$install_path/bin"
+    cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path/bin"
+    chmod +x "$install_path/bin/$TOOL_NAME"
 
-    # TODO: Asert litestream executable exists.
     local tool_cmd
     tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
     test -x "$install_path/bin/$tool_cmd" || fail "Expected $install_path/bin/$tool_cmd to be executable."
