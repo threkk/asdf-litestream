@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+REPORT_URL="https://github.com/threkk/asdf-litestream/issues"
 GH_REPO="https://github.com/benbjohnson/litestream"
 TOOL_NAME="litestream"
 TOOL_TEST="litestream version"
@@ -48,7 +49,7 @@ download_release() {
       local ext="zip"
       ;;
     *)
-      local platform=notset
+      fail "Platform download not supported. Please, open an issue at $REPORT_URL"
       ;;
   esac
 

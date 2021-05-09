@@ -10,6 +10,7 @@
 
 - [Dependencies](#dependencies)
 - [Install](#install)
+- [Issues](#issues)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -45,6 +46,10 @@ litestream version
 
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
 install & manage versions.
+
+# Issues
+
+Issues related to litestream should be reported at its [Github repository](https://github.com/benbjohnson/litestream/issues). Issues related with the installation of litestream using asdf should be reported [here](https://github.com/threkk/asdf-litestream/issues).
 
 # Contributing
 
